@@ -27,6 +27,5 @@
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
       ]
     }
-  ],
-  "nodeVersion": "18.x"
+  ]
 } 
