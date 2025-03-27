@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "public": true,
+  "env": {
+    "PROKERALA_CLIENT_ID": "${PROKERALA_CLIENT_ID}",
+    "PROKERALA_CLIENT_SECRET": "${PROKERALA_CLIENT_SECRET}",
+    "TOGETHER_API_KEY": "${TOGETHER_API_KEY}"
+  },
+  "builds": [
+    {
+      "src": "api/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ],
+  "nodeVersion": "18.x"
+} 
