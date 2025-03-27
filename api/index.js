@@ -1,13 +1,7 @@
-// Main API router
+// Main API router for Vercel serverless functions
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-
-const app = express();
-
-// Configure middleware
-app.use(cors());
-app.use(express.json());
 
 // Import route handlers
 const authProkeralaHandler = require('./auth-prokerala');
@@ -18,7 +12,14 @@ const chartBirthHandler = require('./chart-birth');
 const chartDashasHandler = require('./chart-dashas');
 const chartYogasDoshasHandler = require('./chart-yogas-doshas');
 
-// Mount route handlers (all routes are defined in their respective handlers)
+// Create an Express app instance
+const app = express();
+
+// Configure middleware
+app.use(cors());
+app.use(express.json());
+
+// Mount route handlers
 app.use(authProkeralaHandler);
 app.use(geocodeHandler);
 app.use(aiGenerateHandler);
@@ -46,4 +47,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app; 
+// Export the Express app as a Vercel serverless function
+module.exports = app;
+
+// Handler for Vercel serverless functions
+module.exports = (req, res) => {
+  // This is necessary for Vercel to properly handle the request
+  return app(req, res);
+}; 
